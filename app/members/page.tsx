@@ -1,5 +1,6 @@
 "use client";
 import { memberDetails } from "@/components/data"
+import SpecialCard from "@/components/FacAd";
 import MemberCard, { Member } from "@/components/MemberCard"
 import { useState } from "react"
 
@@ -13,7 +14,21 @@ const Members = () => {
 
   return (
     <div className="pt-22 w-full flex flex-col items-center">
-      
+        <div className="w-[80%] mt-10 flex flex-col items-center">
+            <p className="text-4xl font-semibold ">Faculty Advisor</p>
+        </div>
+        <div className="my-10 flex flex-wrap gap-8 justify-center">
+          <SpecialCard
+            name="Dr. Vaishakh Nair"
+            department="Chemical Engineering"
+            role="Faculty Advisor"
+            image="/fac_ad.jpeg"
+            about="Dr. Vaishakh Nair is the Faculty Advisor for ISTE NITK and an Assistant Professor in the Department of Chemical Engineering at NITK Surathkal. His research focuses on lignin valorization, photocatalysis, and nanotechnology, with significant contributions to sustainable chemical processes. He has published over 25 research papers in high-impact journals, received more than 2,000 citations, and holds an h-index of 21. He has successfully supervised multiple funded research projects, delivered expert lectures at renowned institutions, and is widely recognized for his academic and research excellence."
+            linkedin="https://www.linkedin.com/in/dr-vaishakh-nair-32a31a1b/?originalSubdomain=in"
+            email="vaishakhnair@nitk.edu.in"
+          />
+        </div>
+
         <div className="w-[80%] mt-10 flex flex-col items-center">
             <p className="text-4xl font-semibold ">Explorers</p>
         </div>
@@ -32,7 +47,7 @@ const Members = () => {
             {
               memberDetails.map((member: Member, index:number) => (
                 <div key={index}>
-                  <MemberCard name={member.name} sig={member.sig} post={member.post} />
+                  <MemberCard name={member.name} sig={member.sig} post={member.post} image={member.image} />
                 </div>
               ))
             }

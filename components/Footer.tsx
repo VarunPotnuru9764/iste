@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import { PiLinkedinLogoFill } from "react-icons/pi";
+import { PiLinkedinLogoFill, PiMailbox } from "react-icons/pi";
 import { PiInstagramLogoFill } from "react-icons/pi";
 import { MdEmail } from "react-icons/md";
 import Link from 'next/link';
@@ -8,7 +8,7 @@ import Link from 'next/link';
 const Footer = () => {
   return (
 
-    <div className='w-full flex bg-transperant backdrop-blur-xs flex-col items-center'>
+    <div className='w-full flex bg-transparent backdrop-blur-xs flex-col items-center mt-10'>
         <div className='w-[80%] flex justify-between gap-10'>
             <div className="h-64 w-64 relative">
             <Image 
