@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Events } from './data'
 
 interface Planet {
@@ -11,9 +12,11 @@ interface Planet {
   radius: number
   speed: number
   image: string
+  link: string
 }
 
 const SolarSystem = () => {
+  const router = useRouter()
   const [hoveredPlanet, setHoveredPlanet] = useState<number | null>(null)
   const [selectedPlanet, setSelectedPlanet] = useState<number | null>(null)
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
@@ -26,6 +29,7 @@ const SolarSystem = () => {
       radius: 180,
       speed: 20,
       image: Events[0].image || '/scotland_yard.jpeg',
+      link: Events[0].link || '/events/scotland-yard'
     },
     {
       id: 1,
@@ -34,6 +38,7 @@ const SolarSystem = () => {
       radius: 250,
       speed: 28,
       image: Events[1].image || '/square_one.jpeg',
+      link: Events[1].link || '/events/square-one'
     },
     {
       id: 2,
@@ -42,26 +47,30 @@ const SolarSystem = () => {
       radius: 320,
       speed: 36,
       image: Events[2].image || '/transcend.png',
+      link: Events[2].link || '/events/transcend'
     },
   ]
 
-  // per-planet image orientation (degrees) — set to 0 so artwork stays upright like the sun
-  const planetRotations = [0, 0, 0]
+  const handlePlanetDoubleClick = (link: string) => {
+    // REDIRECTION PLACEHOLDER: logic to handle external URLs (starting with http) vs internal repository paths
+    if (link.startsWith('http')) {
+      window.open(link, '_blank', 'noopener,noreferrer')
+    } else {
+      router.push(link)
+    }
+  }
 
   const handlePlanetHover = (planetId: number, e: React.MouseEvent) => {
-    // cancel any pending hide
     if (hoverTimeoutRef.current) {
       window.clearTimeout(hoverTimeoutRef.current)
       hoverTimeoutRef.current = null
     }
     setHoveredPlanet(planetId)
-    // position panel to the right side of the planet element
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
     setTooltipPos({ x: rect.right + 12, y: rect.top + rect.height / 2 })
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    // no-op: panel stays anchored to hovered planet's bounding rect
   }
 
   const handlePlanetClick = (planetId: number) => {
@@ -124,7 +133,6 @@ const SolarSystem = () => {
           will-change: transform, opacity;
         }
 
-        /* Shooting stars (streaks) */
         @keyframes shoot {
           0% { opacity: 0; transform: translateX(-10vw) translateY(0) rotate(25deg) scaleX(0.2); }
           10% { opacity: 1; }
@@ -195,10 +203,8 @@ const SolarSystem = () => {
           margin: 0 auto;
           perspective: 1200px;
           transform-style: preserve-3d;
-          /* straight view: no rotateX so planets face camera directly */
         }
 
-        /* wrapper that scales Y to create elliptical orbital paths while keeping sun unskewed */
         .orbits-wrapper {
           position: absolute;
           top: 50%;
@@ -209,9 +215,6 @@ const SolarSystem = () => {
           transform-origin: center;
         }
 
-        /* The orbits-wrapper scales Y to create elliptical paths. That scale skews child rotations
-           so images appear tilted. Counter the scale on the planet artwork so planets face the user.
-           inverse of 0.62 ~= 1.6129 */
         .planet-image {
           transform: scaleY(1.6129);
           transform-origin: 50% 50%;
@@ -271,7 +274,6 @@ const SolarSystem = () => {
           left: 50%;
           width: 0;
           height: 0;
-          /* pause when hovered */
           transition: animation-play-state 0.2s linear;
         }
 
@@ -416,16 +418,15 @@ const SolarSystem = () => {
         }
       `}</style>
 
-      {/* Starfield Background */}
       <div className="starfield">
         {Array.from({ length: 300 }).map((_, i) => {
           const colors = [
-            'rgba(255, 255, 255, 1)',        // bright white
-            'rgba(150, 200, 255, 0.95)',     // light blue
-            'rgba(0, 229, 255, 0.95)',       // bright cyan
-            'rgba(200, 150, 255, 0.9)',      // light purple
-            'rgba(255, 230, 200, 0.9)',      // warm golden
-            'rgba(100, 200, 255, 0.95)',     // sky blue
+            'rgba(255, 255, 255, 1)',
+            'rgba(150, 200, 255, 0.95)',
+            'rgba(0, 229, 255, 0.95)',
+            'rgba(200, 150, 255, 0.9)',
+            'rgba(255, 230, 200, 0.9)',
+            'rgba(100, 200, 255, 0.95)',
           ]
           const color = colors[Math.floor(Math.random() * colors.length)]
           return (
@@ -446,14 +447,13 @@ const SolarSystem = () => {
           )
         })}
 
-        {/* Larger glowing stars (soft, blurred dots) with color variation - denser and brighter */}
         {Array.from({ length: 100 }).map((_, i) => {
           const gradients = [
-            `radial-gradient(circle, rgba(255,255,255,${Math.random() * 0.9 + 0.5}) 0%, rgba(255,255,255,0.15) 35%, rgba(0,0,0,0) 60%)`,  // white
-            `radial-gradient(circle, rgba(0,229,255,${Math.random() * 0.85 + 0.4}) 0%, rgba(0,229,255,0.12) 35%, rgba(0,0,0,0) 60%)`,   // cyan
-            `radial-gradient(circle, rgba(150,200,255,${Math.random() * 0.8 + 0.4}) 0%, rgba(150,200,255,0.12) 35%, rgba(0,0,0,0) 60%)`, // blue
-            `radial-gradient(circle, rgba(200,100,255,${Math.random() * 0.8 + 0.4}) 0%, rgba(200,100,255,0.12) 35%, rgba(0,0,0,0) 60%)`, // purple
-            `radial-gradient(circle, rgba(255,200,150,${Math.random() * 0.8 + 0.4}) 0%, rgba(255,200,150,0.12) 35%, rgba(0,0,0,0) 60%)`, // warm
+            `radial-gradient(circle, rgba(255,255,255,${Math.random() * 0.9 + 0.5}) 0%, rgba(255,255,255,0.15) 35%, rgba(0,0,0,0) 60%)`,
+            `radial-gradient(circle, rgba(0,229,255,${Math.random() * 0.85 + 0.4}) 0%, rgba(0,229,255,0.12) 35%, rgba(0,0,0,0) 60%)`,
+            `radial-gradient(circle, rgba(150,200,255,${Math.random() * 0.8 + 0.4}) 0%, rgba(150,200,255,0.12) 35%, rgba(0,0,0,0) 60%)`,
+            `radial-gradient(circle, rgba(200,100,255,${Math.random() * 0.8 + 0.4}) 0%, rgba(200,100,255,0.12) 35%, rgba(0,0,0,0) 60%)`,
+            `radial-gradient(circle, rgba(255,200,150,${Math.random() * 0.8 + 0.4}) 0%, rgba(255,200,150,0.12) 35%, rgba(0,0,0,0) 60%)`,
           ]
           return (
             <div
@@ -473,7 +473,6 @@ const SolarSystem = () => {
           )
         })}
 
-        {/* Shooting stars layer - more visible */}
         {Array.from({ length: 12 }).map((_, i) => (
           <div
             key={`shoot-${i}`}
@@ -493,13 +492,11 @@ const SolarSystem = () => {
       <div className={`orbital-container ${hoveredPlanet !== null ? 'paused' : ''}`} onMouseMove={handleMouseMove} onMouseLeave={() => setHoveredPlanet(null)}>
         <div className="orbital-background"></div>
 
-        {/* Orbit rings (inside orbits-wrapper to make them elliptical) */}
         <div className="orbits-wrapper">
           <div className="orbit-ring orbit-ring-1"></div>
           <div className="orbit-ring orbit-ring-2"></div>
           <div className="orbit-ring orbit-ring-3"></div>
 
-          {/* Planets with 3 separate orbital paths (inside wrapper) */}
           {planets.map((planet) => {
           const min = Math.min(...planets.map((p) => p.radius))
           const max = Math.max(...planets.map((p) => p.radius))
@@ -512,12 +509,12 @@ const SolarSystem = () => {
               className={`planet-container planet-orbit-${planet.id}`}
               onMouseEnter={(e) => handlePlanetHover(planet.id, e)}
               onMouseLeave={() => {
-                // small delay to allow entering the side panel
                 hoverTimeoutRef.current = window.setTimeout(() => setHoveredPlanet(null), 180)
               }}
             >
               <div
                 onClick={() => handlePlanetClick(planet.id)}
+                onDoubleClick={() => handlePlanetDoubleClick(planet.link)}
                 className={`planet ${hoveredPlanet === planet.id ? 'hovered' : ''} ${selectedPlanet === planet.id ? 'selected' : ''}`}
                 style={{ transform: `scale(${selectedPlanet === planet.id ? 1.6 : hoveredPlanet === planet.id ? 1.18 : scale})` }}
               >
@@ -528,7 +525,6 @@ const SolarSystem = () => {
                     width={110}
                     height={110}
                     className="w-full h-full object-cover"
-                    // keep artwork upright like the sun/logo
                     style={{ transform: 'rotate(0deg)', transformOrigin: '50% 50%' }}
                   />
                   <div className="planet-highlight" aria-hidden />
@@ -540,7 +536,6 @@ const SolarSystem = () => {
           })}
         </div>
 
-        {/* Sun - ISTE Logo (drawn above orbits so it's not skewed) */}
         <div className="sun">
           <div className="sun-image">
             <Image
@@ -555,7 +550,6 @@ const SolarSystem = () => {
 
       </div>
 
-      {/* Tooltip */}
       {hoveredPlanet !== null && (
         <div
           className="fixed z-50"
@@ -589,7 +583,6 @@ const SolarSystem = () => {
         </div>
       )}
 
-      {/* Selected Event Card */}
       {selectedPlanet !== null && (
         <div className="fixed right-8 top-1/4 z-50">
           <div className="bg-black/60 border border-white/10 rounded-2xl p-6 w-96 backdrop-blur-md shadow-2xl">
