@@ -81,6 +81,12 @@ const SolarSystem = () => {
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center relative bg-background overflow-hidden py-16">
+      {/* EVENTS Header */}
+      <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-40">
+        <h1 className="text-4xl md:text-6xl font-black tracking-[0.25em] text-white drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">
+          EVENTS
+        </h1>
+      </div>
       <style>{`
         @keyframes orbit-0 {
   from { transform: rotate(0deg) translateX(200px) rotate(0deg); }
@@ -257,7 +263,7 @@ const SolarSystem = () => {
           border: 2px solid rgba(0, 229, 255, 0.5);
           box-shadow: 0 0 60px rgba(0, 229, 255, 0.7), inset 0 0 40px rgba(0, 229, 255, 0.4), 0 0 120px rgba(0, 229, 255, 0.3);
           z-index: 20;
-          animation: float-in 0.8s ease-out, sun-glow-pulse 3s ease-in-out infinite;
+          animation: float-in 0.8s ease-out;
         }
 
         .sun-image {
@@ -288,12 +294,12 @@ const SolarSystem = () => {
 
         .planet {
           position: absolute;
-          width: 120px;
-          height: 120px;
-          left: -60px;
-          top: -60px;
+          width: 80px;       
+          height: 80px;      
+          left: -40px;       
+          top: -40px;       
           cursor: pointer;
-          transition: all 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
+          transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -307,25 +313,22 @@ const SolarSystem = () => {
         }
 
         .planet-container:nth-child(4) .planet {
-          animation: pulse-glow-0 3s ease-in-out infinite;
-          box-shadow: 0 0 30px rgba(0, 229, 255, 0.4), 0 0 60px rgba(0, 229, 255, 0.2), inset 0 0 20px rgba(0, 229, 255, 0.2);
+          box-shadow: 0 0 45px rgba(0, 229, 255, 0.6), inset 0 0 25px rgba(0, 229, 255, 0.3);
         }
 
         .planet-container:nth-child(5) .planet {
-          animation: pulse-glow-1 3s ease-in-out infinite;
-          box-shadow: 0 0 30px rgba(255, 159, 28, 0.4), 0 0 60px rgba(255, 159, 28, 0.2), inset 0 0 20px rgba(255, 159, 28, 0.2);
+          box-shadow: 0 0 45px rgba(255, 159, 28, 0.6), inset 0 0 25px rgba(255, 159, 28, 0.3);
         }
 
         .planet-container:nth-child(6) .planet {
-          animation: pulse-glow-2 3s ease-in-out infinite;
-          box-shadow: 0 0 30px rgba(217, 70, 239, 0.4), 0 0 60px rgba(217, 70, 239, 0.2), inset 0 0 20px rgba(217, 70, 239, 0.2);
+          box-shadow: 0 0 45px rgba(217, 70, 239, 0.6), inset 0 0 25px rgba(217, 70, 239, 0.3);
         }
 
         .planet.hovered {
-          width: 150px;
-          height: 150px;
-          left: -75px;
-          top: -75px;
+          width: 100px;      
+          height: 100px;     
+          left: -50px;       
+          top: -50px;        
           border-width: 3px;
         }
 
@@ -345,8 +348,8 @@ const SolarSystem = () => {
         }
 
         .planet-image {
-          width: 110px;
-          height: 110px;
+       width: 70px;       
+          height: 70px;
           border-radius: 50%;
           overflow: hidden;
           position: relative;
@@ -355,6 +358,7 @@ const SolarSystem = () => {
           justify-content: center;
           box-shadow: inset -20px -20px 40px rgba(0, 0, 0, 0.6), inset 15px 15px 30px rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.3);
           background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.1), transparent);
+          transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .planet-image img {
@@ -375,8 +379,8 @@ const SolarSystem = () => {
         }
 
         .planet.hovered .planet-image {
-          width: 140px;
-          height: 140px;
+          width: 90px;       
+          height: 90px;      
           box-shadow: inset -25px -25px 50px rgba(0, 0, 0, 0.7), inset 20px 20px 40px rgba(255, 255, 255, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 229, 255, 0.4);
         }
 
@@ -412,7 +416,7 @@ const SolarSystem = () => {
       `}</style>
 
       <div className="starfield">
-        {Array.from({ length: 150 }).map((_, i) => {
+        {Array.from({ length: 40 }).map((_, i) => {
           const colors = [
             'rgba(255, 255, 255, 1)',
             'rgba(150, 200, 255, 0.95)',
@@ -440,7 +444,7 @@ const SolarSystem = () => {
           )
         })}
 
-        {Array.from({ length: 30}).map((_, i) => {
+        {Array.from({ length: 8}).map((_, i) => {
           const gradients = [
             `radial-gradient(circle, rgba(255,255,255,${Math.random() * 0.9 + 0.5}) 0%, rgba(255,255,255,0.15) 35%, rgba(0,0,0,0) 60%)`,
             `radial-gradient(circle, rgba(0,229,255,${Math.random() * 0.85 + 0.4}) 0%, rgba(0,229,255,0.12) 35%, rgba(0,0,0,0) 60%)`,
@@ -466,20 +470,6 @@ const SolarSystem = () => {
           )
         })}
 
-        {Array.from({ length: 12 }).map((_, i) => (
-          <div
-            key={`shoot-${i}`}
-            className="shooting-star"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 60}%`,
-              height: `${Math.random() * 160 + 80}px`,
-              opacity: Math.random() * 0.95 + 0.3,
-              transform: `rotate(${15 + Math.random() * 30}deg)`,
-              animation: `shoot ${Math.random() * 2 + 1.6}s linear ${Math.random() * 6}s infinite`
-            }}
-          />
-        ))}
       </div>
 
       <div className={`orbital-container ${hoveredPlanet !== null ? 'paused' : ''}`} onMouseMove={handleMouseMove} onMouseLeave={() => setHoveredPlanet(null)}>
@@ -515,8 +505,8 @@ const SolarSystem = () => {
                   <Image
                     src={planet.image}
                     alt={planet.title}
-                    width={110}
-                    height={110}
+                    width={70}     
+                    height={70}    
                     className="w-full h-full object-cover"
                     style={{ transform: 'rotate(0deg)', transformOrigin: '50% 50%' }}
                   />
