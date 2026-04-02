@@ -414,7 +414,7 @@ export const SolarSystem = () => {
           opacity: 1;
         }
       `}</style>
-
+{/* 
       <div className="starfield">
         {Array.from({ length: 40 }).map((_, i) => {
           const colors = [
@@ -470,7 +470,7 @@ export const SolarSystem = () => {
           )
         })}
 
-      </div>
+      </div> */}
 
       <div className={`orbital-container ${hoveredPlanet !== null ? 'paused' : ''}`} onMouseMove={handleMouseMove} onMouseLeave={() => setHoveredPlanet(null)}>
         <div className="orbital-background"></div>
