@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import NavBar from "@/components/NavBar";
-import ParticlesBackground from "@/components/ParticlesBackground";
 import Footer from "@/components/Footer";
 import { Bebas_Neue, Nunito } from "next/font/google";
 const bebasNeue = Bebas_Neue({
@@ -10,6 +8,8 @@ const bebasNeue = Bebas_Neue({
   variable: "--font-bebas",
   display: "swap",
 });
+import RouteChrome from "@/components/RouteChrome";
+
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -31,10 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body>
-        <ParticlesBackground />
-        <NavBar />
-        {children}
-        <Footer/>
+        <RouteChrome>{children}</RouteChrome>
       </body>
     </html>
   );
