@@ -5,8 +5,9 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Position, GlobeConfig } from "@/components/ui/globe";
 import { SigCard } from "@/components/ui/sig-card"; 
-import { TeamStrip } from "@/components/ui/team-strip"; 
+// import { TeamStrip } from "@/components/ui/team-strip"; 
 import { consumeSkipNextHomeLoader } from "@/lib/home-loader-skip";
+import SolarSystem from "@/components/SolarSystem";
 
 const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), {
   ssr: false,
@@ -352,12 +353,12 @@ export default function Home() {
         </div>
       </section>
 
-      <div id="core" className={`relative z-20 ${isMobile ? mobilePanelClass : ""}`}>
+      {/* <div id="core" className={`relative z-20 ${isMobile ? mobilePanelClass : ""}`}>
         <TeamStrip title="The Core" members={coreTeam} />
-      </div>
+      </div> */}
 
       <div id="events" className={`relative z-20 ${isMobile ? mobilePanelClass : ""}`}>
-        <TeamStrip title="Auxiliary Core" members={auxiliaryTeam} />
+        <SolarSystem />
       </div>
 
       <footer className="relative z-20 border-t border-white/14 bg-black/28 pb-10 pt-14 text-slate-400 shadow-[inset_0_1px_0_rgba(45,212,191,0.15)] sm:border-white/12 sm:bg-black/25 sm:pt-20" id="contact">

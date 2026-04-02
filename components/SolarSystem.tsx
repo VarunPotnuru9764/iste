@@ -15,7 +15,7 @@ interface Planet {
   link: string
 }
 
-const SolarSystem = () => {
+export const SolarSystem = () => {
   const router = useRouter()
   const [hoveredPlanet, setHoveredPlanet] = useState<number | null>(null)
   const [selectedPlanet, setSelectedPlanet] = useState<number | null>(null)
@@ -80,7 +80,7 @@ const SolarSystem = () => {
   const hoverTimeoutRef = useRef<number | null>(null)
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center relative bg-background overflow-hidden py-16">
+    <div className="w-full min-h-screen flex items-center justify-center relative bg-transperant overflow-hidden py-16">
       {/* EVENTS Header */}
       <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-40">
         <h1 className="text-4xl md:text-6xl font-black tracking-[0.25em] text-white drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">
