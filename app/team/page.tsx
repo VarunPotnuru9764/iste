@@ -286,6 +286,7 @@ export default function TeamPage() {
           </p>
         </div>
       </footer>
+      
     </div>
   );
 }

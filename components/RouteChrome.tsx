@@ -51,9 +51,7 @@ export default function RouteChrome({ children }: RouteChromeProps) {
   return (
     <>
       <ParticlesBackground />
-      <NavBar />
       {children}
-      <Footer />
     </>
   );
 }

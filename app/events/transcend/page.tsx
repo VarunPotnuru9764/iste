@@ -332,7 +332,7 @@ export default function TranscendPage() {
 
         {/* ── FOOTER ── */}
         <footer
-          className="footer-inner flex items-center justify-between"
+          className="footer-inner flex items-center justify-between min-h-[200px]"
           style={{ background: "#04050D", padding: "24px 80px", borderTop: "2px solid rgba(245,196,0,0.2)" }}
         >
           <div>
