@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSingleProject, getSingleSig } from "@/lib/cms";
+import { getSigTemplateStyle } from "@/lib/project-templates";
+import { cn } from "@/lib/utils";
 
 export default async function ProjectPage({
   params,
@@ -16,11 +18,12 @@ export default async function ProjectPage({
   }
 
   const sig = await getSingleSig(project.sig);
+  const style = getSigTemplateStyle(sig?.slug ?? project.sig);
 
   return (
     <main className="min-h-screen px-6 pt-30 pb-16">
       <article className="mx-auto max-w-5xl">
-        <div className="overflow-hidden rounded-3xl border border-white/10 bg-card/90">
+        <div className={cn("overflow-hidden rounded-3xl border bg-card/90", style.cardBorder)}>
           <div className="relative h-64 w-full md:h-80">
             <Image
               src={project.coverImage}
@@ -29,17 +32,18 @@ export default async function ProjectPage({
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+            <div className={cn("absolute inset-0 bg-gradient-to-r", style.sectionAccent)} />
             <div className="absolute bottom-6 left-6 right-6">
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 {sig ? (
                   <Link
                     href={`/sigs/${sig.slug}`}
-                    className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
+                    className={cn("rounded-full border px-3 py-1 text-xs font-semibold", style.sigChip)}
                   >
                     {sig.title}
                   </Link>
                 ) : null}
-                <span className="rounded-full border border-secondary/40 bg-secondary/10 px-3 py-1 text-xs font-semibold text-secondary">
+                <span className={cn("rounded-full border px-3 py-1 text-xs font-semibold", style.statusChip)}>
                   {project.status}
                 </span>
                 <span className="text-xs font-medium text-gray-200">
@@ -66,7 +70,7 @@ export default async function ProjectPage({
                 {project.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-gray-200"
+                    className={cn("rounded-full border px-3 py-1 text-xs font-semibold", style.tag)}
                   >
                     {tech}
                   </span>
@@ -74,7 +78,7 @@ export default async function ProjectPage({
               </div>
             </section>
 
-            <aside className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <aside className={cn("rounded-2xl border bg-white/5 p-5", style.cardBorder)}>
               <h3 className="text-base font-semibold text-white">
                 Project Details
               </h3>
@@ -95,7 +99,10 @@ export default async function ProjectPage({
                     href={project.githubUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-center text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+                    className={cn(
+                      "rounded-full border px-4 py-2 text-center text-sm font-semibold transition-colors",
+                      style.button
+                    )}
                   >
                     GitHub
                   </a>
@@ -105,7 +112,10 @@ export default async function ProjectPage({
                     href={project.demoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-center text-sm font-semibold text-secondary transition-colors hover:bg-secondary hover:text-black"
+                    className={cn(
+                      "rounded-full border px-4 py-2 text-center text-sm font-semibold transition-colors",
+                      style.button
+                    )}
                   >
                     Live Demo
                   </a>

@@ -6,6 +6,9 @@ const SIG_SEED = [
   { title: 'Concrete', slug: 'concrete', description: 'Development and software engineering SIG.' },
   { title: 'Chronicle', slug: 'chronicle', description: 'Content, media, and documentation SIG.' },
   { title: 'Catalyst', slug: 'catalyst', description: 'Innovation and research SIG.' },
+  { title: 'Charge', slug: 'charge', description: 'Sustainable energy systems and green-tech SIG.' },
+  { title: 'Create', slug: 'create', description: 'Design, creativity, and digital experiences SIG.' },
+  { title: 'Credit', slug: 'credit', description: 'Finance-tech, blockchain, and digital economy SIG.' },
 ];
 
 const PROJECT_SEED = {
@@ -19,6 +22,30 @@ const PROJECT_SEED = {
   year: '2026',
   githubUrl: 'https://github.com/istenitk/cipher-campus',
   leads: ['Crypt SIG Team'],
+};
+
+const ensureSeedSigs = async (strapi: Core.Strapi) => {
+  for (const sig of SIG_SEED) {
+    const existing = await strapi.db.query('api::sig.sig').findOne({
+      where: { slug: sig.slug },
+      select: ['id'],
+    });
+
+    if (!existing?.id) {
+      await strapi.db.query('api::sig.sig').create({
+        data: {
+          ...sig,
+          publishedAt: new Date(),
+        },
+      });
+      continue;
+    }
+
+    await strapi.db.query('api::sig.sig').update({
+      where: { id: existing.id },
+      data: { publishedAt: new Date() },
+    });
+  }
 };
 
 const ensurePublicReadPermissions = async (strapi: Core.Strapi) => {
@@ -80,20 +107,7 @@ export default {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
-    const existingSigs = await strapi.db.query('api::sig.sig').findMany({
-      select: ['id', 'slug'],
-    });
-
-    if (existingSigs.length === 0) {
-      for (const sig of SIG_SEED) {
-        await strapi.db.query('api::sig.sig').create({
-          data: {
-            ...sig,
-            publishedAt: new Date(),
-          },
-        });
-      }
-    }
+    await ensureSeedSigs(strapi);
 
     const cryptSig = await strapi.db.query('api::sig.sig').findOne({
       where: { slug: 'crypt' },

@@ -23,7 +23,7 @@ These are already created in code:
 - draft/publish enabled
 
 Seed data is also auto-added on first boot:
-- SIGs: `crypt`, `clutch`, `concrete`, `chronicle`, `catalyst`
+- SIGs: `crypt`, `clutch`, `concrete`, `chronicle`, `catalyst`, `charge`, `create`, `credit`
 - Project: `cipher-campus` under `crypt`
 
 ## 3) Permissions

@@ -9,7 +9,7 @@ export default function Home() {
     <main className="min-h-screen">
     
       <section id="home" className="h-screen flex items-center justify-center flex-col gap-10">
-        <h1 className="relative z-10 text-8xl font-display font-bold text-white">
+        <h1 className="relative z-10 px-4 text-center text-4xl leading-tight font-display font-bold text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
           Welcome to <span className="image-text">ISTE NITK</span>
         </h1>
         <h1 className="text-xl">Where <span className="text-[#d32c02]">creativity</span> meets <span className="text-[#d32c02]">technology</span></h1>

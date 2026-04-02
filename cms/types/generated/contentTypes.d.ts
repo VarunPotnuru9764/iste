@@ -458,7 +458,8 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     shortDescription: Schema.Attribute.String & Schema.Attribute.Required;
-    sig: Schema.Attribute.Relation<'manyToOne', 'api::sig.sig'>;
+    sig: Schema.Attribute.Relation<'manyToOne', 'api::sig.sig'> &
+      Schema.Attribute.Required;
     slug: Schema.Attribute.UID<'title'> &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;

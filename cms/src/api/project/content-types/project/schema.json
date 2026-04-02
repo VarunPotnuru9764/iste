@@ -63,7 +63,8 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::sig.sig",
-      "inversedBy": "projects"
+      "inversedBy": "projects",
+      "required": true
     }
   }
 }
