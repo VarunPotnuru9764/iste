@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getAllSigs, getProjectsForSig, isUsingStrapi } from "@/lib/cms";
+import { getAllSigs, getProjectsForSig } from "@/lib/cms";
 import { getSigTemplateStyle } from "@/lib/project-templates";
 import { cn } from "@/lib/utils";
 
 export default async function ProjectsPage() {
   const sigs = await getAllSigs();
-  const usingStrapi = isUsingStrapi();
   const projectsBySig = await Promise.all(
     sigs.map(async (sig) => ({
       sig,
@@ -28,10 +27,6 @@ export default async function ProjectsPage() {
             Browse projects by SIG. Each SIG now has a distinct project visual
             template so sections feel unique while keeping data structured.
           </p>
-          <p className="mt-2 text-xs text-muted">
-            Source: {usingStrapi ? "Strapi CMS" : "Local fallback data"}
-          </p>
-
           <div className="mt-6 flex flex-wrap gap-2">
             {sigs.map((sig) => (
               <a
@@ -48,7 +43,7 @@ export default async function ProjectsPage() {
 
       <section className="mx-auto mt-10 max-w-6xl space-y-10">
         {projectsBySig.map(({ sig, projects }) => {
-          const style = getSigTemplateStyle(sig.slug);
+          const style = getSigTemplateStyle(sig.projectTemplate, sig.slug);
           return (
             <div key={sig.slug} id={sig.slug} className="scroll-mt-28">
               <div className="relative mb-5 flex items-center justify-between overflow-hidden rounded-2xl border border-white/10 bg-card/80 px-5 py-4">

@@ -18,7 +18,7 @@ export default async function ProjectPage({
   }
 
   const sig = await getSingleSig(project.sig);
-  const style = getSigTemplateStyle(sig?.slug ?? project.sig);
+  const style = getSigTemplateStyle(sig?.projectTemplate, sig?.slug ?? project.sig);
 
   return (
     <main className="min-h-screen px-6 pt-30 pb-16">

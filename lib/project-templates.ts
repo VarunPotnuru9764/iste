@@ -10,6 +10,19 @@ type TemplateStyle = {
   tag: string;
 };
 
+export const PROJECT_TEMPLATE_KEYS = [
+  "crypt",
+  "clutch",
+  "concrete",
+  "chronicle",
+  "catalyst",
+  "charge",
+  "create",
+  "credit",
+] as const;
+
+export type ProjectTemplateKey = (typeof PROJECT_TEMPLATE_KEYS)[number];
+
 const baseStyle: TemplateStyle = {
   sectionAccent: "from-primary/20 via-primary/10 to-transparent",
   sigChip: "border-primary/40 bg-primary/10 text-primary",
@@ -21,7 +34,7 @@ const baseStyle: TemplateStyle = {
   tag: "border-white/15 bg-white/5 text-gray-200",
 };
 
-const sigTemplateStyles: Record<string, Partial<TemplateStyle>> = {
+const sigTemplateStyles: Record<ProjectTemplateKey, Partial<TemplateStyle>> = {
   crypt: {
     sectionAccent: "from-cyan-400/25 via-sky-500/10 to-transparent",
     sigChip: "border-cyan-300/40 bg-cyan-400/10 text-cyan-200",
@@ -96,9 +109,12 @@ const sigTemplateStyles: Record<string, Partial<TemplateStyle>> = {
   },
 };
 
-export const getSigTemplateStyle = (sigSlug?: string): TemplateStyle => {
-  const key = sigSlug ?? "";
-  const custom = sigTemplateStyles[key] ?? {};
+export const getSigTemplateStyle = (
+  projectTemplate?: string,
+  sigSlug?: string
+): TemplateStyle => {
+  const key = (projectTemplate ?? sigSlug ?? "crypt") as ProjectTemplateKey;
+  const custom = sigTemplateStyles[key] ?? sigTemplateStyles.crypt;
 
   return {
     sectionAccent: cn(baseStyle.sectionAccent, custom.sectionAccent),
