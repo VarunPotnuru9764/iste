@@ -11,13 +11,12 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const isProjectsRoute = pathname.startsWith("/projects");
   const shouldAnimateHomeNavbar = isHomePage && !peekSkipNextHomeLoader();
 
   const navLinks = [
     { name: "Home", href: "#home", homeSection: true },
     { name: "SIGs", href: "#sigs", homeSection: true },
-    { name: "Projects", href: "#projects", homeSection: true },
+    { name: "Projects", href: "/projects" },
     { name: "Events", href: "#events", homeSection: true },
     { name: "Contact", href: "#contact" },
   ];
@@ -98,6 +97,7 @@ export const Navbar = () => {
               alt="ISTE Logo"
               width={48}
               height={48}
+              style={{ width: "auto" }}
               className="h-10 sm:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300"
             />
             <Image
@@ -105,21 +105,12 @@ export const Navbar = () => {
               alt="NITK Logo"
               width={48}
               height={48}
+              style={{ width: "auto" }}
               className="h-10 sm:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300"
             />
           </div>
 
           <div className="hidden md:flex space-x-8">
-            {isProjectsRoute && (
-              <Link
-                href="/"
-                onClick={() => markSkipNextHomeLoader()}
-                className="inline-flex items-center gap-1 text-sm font-medium text-white/70 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:text-teal-400"
-              >
-                <span aria-hidden="true">←</span>
-                Back
-              </Link>
-            )}
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -162,18 +153,6 @@ export const Navbar = () => {
             className="md:hidden px-4 pb-4"
           >
             <div className="rounded-2xl bg-black/70 border border-white/10 p-3 flex flex-col">
-              {isProjectsRoute && (
-                <Link
-                  href="/"
-                  onClick={() => {
-                    markSkipNextHomeLoader();
-                    setIsMenuOpen(false);
-                  }}
-                  className="px-4 py-3 text-sm font-medium text-white/85 hover:text-teal-400 hover:bg-white/5 rounded-xl transition-all duration-200 tracking-wide"
-                >
-                  ← Back
-                </Link>
-              )}
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
